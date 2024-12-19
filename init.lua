@@ -3,7 +3,7 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+-- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -162,6 +162,9 @@ vim.keymap.set("n", "<leader>K", "<C-w><C-k>", { desc = "Move focus to the upper
 vim.keymap.set("n", "<leader>v", ":vs<CR>", { desc = "Vertical [S]plit" })
 vim.keymap.set("n", "<leader>s", ":split<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>w", ":w!<CR>", { noremap = true, silent = true })
+
+-- Oil remapping
+vim.keymap.set("n", "<leader>pv", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 vim.keymap.set("i", "<C-l>", function()
 	-- Save the current cursor position
@@ -399,28 +402,17 @@ require("lazy").setup({
 			require("tiny-inline-diagnostic").setup()
 		end,
 	},
-	-- {
-	-- 	"jose-elias-alvarez/null-ls.nvim",
-	-- 	dependencies = { "nvim-lua/plenary.nvim" },
-	-- 	config = function()
-	-- 		local null_ls = require("null-ls")
-	-- 		null_ls.setup({
-	-- 			sources = {
-	-- 				-- Register Black as a formatter
-	-- 				null_ls.builtins.formatting.black,
-	-- 				-- Optionally, you could use autopep8 instead
-	-- 				-- null_ls.builtins.formatting.autopep8,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-	-- NOTE: Plugins can specify dependencies.
-	--
-	-- The dependencies are proper plugin specifications as well - anything
-	-- you do for a plugin at the top level, you can do for a dependency.
-	--
-	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-
+	{
+		"stevearc/oil.nvim",
+		opts = {
+			view_options = {
+				show_hidden = true,
+			},
+		},
+		-- Optional dependencies
+		dependencies = { { "echasnovski/mini.icons", opts = {} } },
+		-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+	},
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
